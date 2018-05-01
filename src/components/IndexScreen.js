@@ -5,11 +5,13 @@ import BookShelf from './BookShelf'
 
 class IndexScreen extends React.Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    currentlyReading: PropTypes.array.isRequired,
+    wantToRead: PropTypes.array.isRequired,
+    read: PropTypes.array.isRequired
   }
 
   render() {
-    const {books} = this.props
+    const {currentlyReading, wantToRead, read} = this.props
 
     return(
       <div className="list-books">
@@ -18,9 +20,9 @@ class IndexScreen extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            <BookShelf books={books} title={'Currently Reading'} />
-            <BookShelf books={books} title={'Want to Read'} />
-            <BookShelf books={books} title={'Read'} />
+            <BookShelf books={currentlyReading} title={'Currently Reading'} />
+            <BookShelf books={wantToRead} title={'Want to Read'} />
+            <BookShelf books={read} title={'Read'} />
           </div>
         </div>
         <div className="open-search">
