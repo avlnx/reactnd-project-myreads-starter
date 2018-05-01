@@ -19,15 +19,16 @@ class BooksApp extends React.Component {
   componentDidMount() {
     // Populate books state piece
     BooksAPI.getAll().then(books => {
-      // Populate proper shelves
-      const currentlyReading = books.filter(book => book.shelf === 'currentlyReading')
-      const wantToRead = books.filter(book => book.shelf === 'wantToRead')
-      const read = books.filter(book => book.shelf === 'read')
-      this.setState({
-        currentlyReading, wantToRead, read, books
+      // Populate proper shelves by filtering the books array
+      const shelves = ['currentlyReading', 'wantToRead', 'read']
+      let newState = {}
+      shelves.forEach(shelf => {
+        newState[shelf] = books.filter(book => book.shelf === shelf)
       })
+      // Adds all books to `books` piece of state
+      newState['books'] = books
+      this.setState(newState)
     })
-
   }
 
   render() {
