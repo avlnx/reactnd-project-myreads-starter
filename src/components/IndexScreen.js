@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import BootItem from './BookItem';
+import BookShelf from './BookShelf'
 
 class IndexScreen extends React.Component {
   static propTypes = {
@@ -10,51 +10,23 @@ class IndexScreen extends React.Component {
 
   render() {
     const {books} = this.props
-    console.log(books)
 
     return(
       <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {books.map(book => (
-                        <BootItem key={book.id} book={book} />
-                      ))}
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {books.map(book => (
-                        <BootItem key={book.id} book={book} />
-                      ))}
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {books.map(book => (
-                        <BootItem key={book.id} book={book} />
-                      ))}
-                    </ol>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="open-search">
-              <Link to='/search'>Add a book</Link>
-            </div>
+        <div className="list-books-title">
+          <h1>MyReads</h1>
+        </div>
+        <div className="list-books-content">
+          <div>
+            <BookShelf books={books} title={'Currently Reading'} />
+            <BookShelf books={books} title={'Want to Read'} />
+            <BookShelf books={books} title={'Read'} />
           </div>
+        </div>
+        <div className="open-search">
+          <Link to='/search'>Add a book</Link>
+        </div>
+      </div>
     )
   }
 }
