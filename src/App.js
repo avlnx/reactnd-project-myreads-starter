@@ -16,7 +16,26 @@ class BooksApp extends React.Component {
     read: [],
   }
 
-  componentDidMount() {
+  changeBookShelfForBook(book, newShelf) {
+    // Update local state so changes are instantaneous then
+    const oldShelf = book.shelf
+    // remove book from oldShelf's piece of state
+    let newState = {}
+    newState[oldShelf] = this.state[oldShelf].filter(b => b.id !== book.id)
+    // add book to the newShelf
+    newState[newShelf] = this.state[newShelf]
+    newState[newShelf].push(book)
+    // actually update state
+    this.setState(newState)
+
+    // update server so we are in sync (if the user reloads for ex)
+    BooksAPI.update(book, newShelf).then(response => {
+      // book updated successfully, now update state
+      console.log(response)
+    })
+  }
+
+  updateBooksState() {
     // Populate books state piece
     BooksAPI.getAll().then(books => {
       // Populate proper shelves by filtering the books array
@@ -31,6 +50,10 @@ class BooksApp extends React.Component {
     })
   }
 
+  componentDidMount() {
+    this.updateBooksState();
+  }
+
   render() {
     console.log(this.state.books);
     return (
@@ -39,7 +62,8 @@ class BooksApp extends React.Component {
           <IndexScreen
             currentlyReading={this.state.currentlyReading}
             wantToRead={this.state.wantToRead}
-            read={this.state.read} />
+            read={this.state.read}
+            moveBookAction={this.changeBookShelfForBook.bind(this)} />
         )}/>
         <Route path='/search' render={() => (
           <SearchScreen />
