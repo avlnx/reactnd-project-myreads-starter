@@ -7,7 +7,6 @@ import PropTypes from 'prop-types'
 class SearchScreen extends React.Component {
   static propTypes = {
     moveBookAction: PropTypes.func.isRequired,
-    booksInShelf: PropTypes.array.isRequired,
   }
 
   state = {
@@ -33,10 +32,13 @@ class SearchScreen extends React.Component {
     // we can quickly check if a book in search results is already
     // in a shelf
     let booksInShelf = {}
-    this.props.booksInShelf.forEach(book => {
-      booksInShelf[book.id] = book.shelf
+    // load current books in shelf
+    BooksAPI.getAll().then((books) => {
+      books.forEach(book => {
+        booksInShelf[book.id] = book.shelf
+      })
+      this.setState({booksInShelf})
     })
-    this.setState({booksInShelf})
   }
 
   componentWillUnmount() {
@@ -63,7 +65,7 @@ class SearchScreen extends React.Component {
         // clear timeoutId, we are done with this search
         this.setState({searchTimeoutId: null})
       })
-    }, 400)
+    }, 300)
     this.setState({searchTimeoutId: timeoutId})
   }
 

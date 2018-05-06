@@ -62,6 +62,7 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    console.log(this.state.books)
     return (
       <div className="app">
         <Route exact path='/' render={() => (
@@ -72,7 +73,7 @@ class BooksApp extends React.Component {
             moveBookAction={this.changeBookShelfForBook.bind(this)} />
         )}/>
         <Route path='/search' render={() => (
-          <SearchScreen moveBookAction={this.changeBookShelfForBook.bind(this)} booksInShelf={this.state.books} />
+          <SearchScreen moveBookAction={this.changeBookShelfForBook.bind(this)} />
         )} />
       </div>
     )
