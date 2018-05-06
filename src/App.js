@@ -17,7 +17,7 @@ class BooksApp extends React.Component {
   }
 
   changeBookShelfForBook(book, newShelf) {
-    // Update local state so changes are instantaneous then
+    // Update local state so changes are instantaneous
     const oldShelf = book.shelf
     // remove book from oldShelf's piece of state
     let newState = {}
@@ -32,6 +32,8 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, newShelf).then(response => {
       // book updated successfully, now update state
       console.log(response)
+      // reload all books
+      this.updateBooksState()
     })
   }
 
