@@ -21,10 +21,15 @@ class BooksApp extends React.Component {
     const oldShelf = book.shelf
     // remove book from oldShelf's piece of state
     let newState = {}
-    newState[oldShelf] = this.state[oldShelf].filter(b => b.id !== book.id)
+    if (book.shelf) {
+      // only remove from old shelf if it actually was in a shelf to begin with
+      newState[oldShelf] = this.state[oldShelf].filter(b => b.id !== book.id)
+    }
     // add book to the newShelf
-    newState[newShelf] = this.state[newShelf]
-    newState[newShelf].push(book)
+    if (newShelf !== 'none') {
+      newState[newShelf] = this.state[newShelf]
+      newState[newShelf].push(book)
+    }
     // actually update state
     this.setState(newState)
 
@@ -53,7 +58,7 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
-    this.updateBooksState();
+    this.updateBooksState()
   }
 
   render() {
@@ -67,7 +72,7 @@ class BooksApp extends React.Component {
             moveBookAction={this.changeBookShelfForBook.bind(this)} />
         )}/>
         <Route path='/search' render={() => (
-          <SearchScreen />
+          <SearchScreen moveBookAction={this.changeBookShelfForBook.bind(this)} booksInShelf={this.state.books} />
         )} />
       </div>
     )
