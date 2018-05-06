@@ -10,7 +10,6 @@ import IndexScreen from './components/IndexScreen'
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
     currentlyReading: [],
     wantToRead: [],
     read: [],
@@ -36,7 +35,6 @@ class BooksApp extends React.Component {
     // update server so we are in sync (if the user reloads for ex)
     BooksAPI.update(book, newShelf).then(response => {
       // book updated successfully, now update state
-      console.log(response)
       // reload all books
       this.updateBooksState()
     })
@@ -51,8 +49,6 @@ class BooksApp extends React.Component {
       shelves.forEach(shelf => {
         newState[shelf] = books.filter(book => book.shelf === shelf)
       })
-      // Adds all books to `books` piece of state
-      newState['books'] = books
       this.setState(newState)
     })
   }
@@ -62,7 +58,6 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    console.log(this.state.books)
     return (
       <div className="app">
         <Route exact path='/' render={() => (
