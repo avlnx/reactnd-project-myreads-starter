@@ -65,7 +65,7 @@ class SearchScreen extends React.Component {
         // clear timeoutId, we are done with this search
         this.setState({searchTimeoutId: null})
       })
-    }, 300)
+    }, 100)
     this.setState({searchTimeoutId: timeoutId})
   }
 
